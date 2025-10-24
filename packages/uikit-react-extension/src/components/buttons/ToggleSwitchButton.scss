@@ -1,0 +1,94 @@
+@use 'sass:math';
+@use 'sass:meta';
+
+@import '../../scss/variables.scss';
+@import '../../scss/mixins.scss';
+
+.uk-button-toggle-switch {
+	border-width: 0;
+
+	@if meta.mixin-exists(hook-button-toggle-switch) {
+		@include hook-button-toggle-switch();
+	}
+
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+
+	font-size: inherit;
+	border-radius: $button-toggle-switch-height;
+	padding: $button-toggle-switch-height * math.div($button-toggle-switch-padding, 100%);
+	background-color: $button-toggle-switch-background;
+	transition: background-color $button-toggle-switch-background-transition-duration ease;
+
+	height: $button-toggle-switch-height;
+	width: calc($button-toggle-switch-height * $button-toggle-switch-width-ratio);
+
+	.spacer {
+		flex-grow: 0;
+		transition: flex-grow $button-toggle-switch-slider-transition-duration ease;
+	}
+
+	.slider {
+		aspect-ratio: 1/1;
+
+		@if meta.mixin-exists(hook-button-toggle-switch-slider) {
+			@include hook-button-toggle-switch-slider();
+		}
+
+		$slider-height: $button-toggle-switch-height * (1 - math.div($button-toggle-switch-padding * 2, 100%));
+
+		height: $slider-height;
+		border-radius: $slider-height;
+		background-color: $button-toggle-switch-color;
+
+		pointer-events: none;
+		flex-shrink: 0;
+	}
+
+	&.uk-button-small {
+		height: $button-toggle-switch-small-height;
+		width: calc($button-toggle-switch-small-height * $button-toggle-switch-width-ratio);
+		border-radius: $button-toggle-switch-small-height;
+		padding: $button-toggle-switch-small-height * math.div($button-toggle-switch-padding, 100%);
+
+		.slider {
+			$slider-height: $button-toggle-switch-small-height * (1 - math.div($button-toggle-switch-padding * 2, 100%));
+			height: $slider-height;
+			border-radius: $slider-height;
+		}
+	}
+
+	&.uk-button-large {
+		height: $button-toggle-switch-large-height;
+		width: calc($button-toggle-switch-large-height * $button-toggle-switch-width-ratio);
+		border-radius: $button-toggle-switch-large-height;
+		padding: $button-toggle-switch-large-height * math.div($button-toggle-switch-padding, 100%);
+
+		.slider {
+			$slider-height: $button-toggle-switch-large-height * (1 - math.div($button-toggle-switch-padding * 2, 100%));
+			height: $slider-height;
+			border-radius: $slider-height;
+		}
+	}
+
+	&.uk-disabled {
+		background-color: $button-toggle-switch-disabled-background;
+
+		.slider {
+			background-color: $button-toggle-switch-active-color;
+		}
+
+		.spacer {
+			flex-grow: 0;
+		}
+	}
+
+	&.uk-active {
+		background-color: $button-toggle-switch-active-background;
+
+		.spacer {
+			flex-grow: 1;
+		}
+	}
+}

@@ -1,0 +1,132 @@
+@use 'sass:color';
+@use 'sass:math';
+
+// ResponsiveLayout variables and hooks
+$responsive-layout-min-viewport-width: 1024px !default;
+$responsive-layout-min-viewport-height: 768px !default;
+
+$responsive-layout-top-section-ratio: 0.05 !default;
+$responsive-layout-bottom-section-ratio: 0.05 !default;
+$responsive-layout-side-section-ratio: 0.075 !default;
+
+$responsive-layout-main-padding-ratio: 0.02 !default;
+
+@mixin hook-responsive-layout-background() {
+	pointer-events: auto;
+	background: linear-gradient(135deg, #1a2a3a 0%, #243b55 100%);
+}
+
+@mixin hook-responsive-layout-top() {
+	pointer-events: none;
+}
+
+@mixin hook-responsive-layout-middle() {
+	pointer-events: none;
+}
+
+@mixin hook-responsive-layout-main() {
+	display: grid;
+	justify-items: start;
+	align-items: center;
+	overflow: hidden;
+	pointer-events: none;
+}
+
+@mixin hook-responsive-layout-side() {
+	pointer-events: none;
+
+	> * {
+		pointer-events: auto;
+	}
+}
+
+@mixin hook-responsive-layout-bottom() {
+	pointer-events: none;
+
+	> * {
+		pointer-events: auto;
+	}
+}
+
+// Glass variables and mixins
+$glass-background: rgba(27, 28, 49, 0.8);
+$glass-border-radius: 1cqh;
+$glass-box-shadow: 0 0px 0px rgba(0, 0, 0, 0.1);
+$glass-backdrop-filter: blur(9.1px);
+$glass-border: 10px solid rgba(0, 0, 0);
+
+@mixin glassmorphism {
+	background: $glass-background;
+	border-radius: $glass-border-radius;
+	box-shadow: $glass-box-shadow;
+	backdrop-filter: $glass-backdrop-filter;
+	-webkit-backdrop-filter: $glass-backdrop-filter;
+	// border: $glass-border;
+}
+
+// Drawer variables and hooks
+$drawer-stack-aspect-ratio: 1.618;
+
+$drawer-width-ratio: 0.25;
+$drawer-gap-ratio: 0.006;
+
+$drawer-transition-duration: 400ms;
+$drawer-stagger-delay: 80ms;
+
+@mixin hook-drawer() {
+	@include glassmorphism();
+	$button-primary-color: #00d97e;
+	$button-primary-hover: #00a35c;
+	$button-danger-color: #ef5350;
+	$button-danger-hover: #e53935;
+	$drawer-close-size-ratio: 0.08;
+	font-size: 4cqw;
+	// Glass morphism background
+	// background: linear-gradient(135deg, rgba(28, 42, 56, 0.95), rgba(36, 59, 85, 0.95));
+
+	&#createLocation {
+		--drawer-width-multiplier: 1.618;
+	}
+	&#editTariffAddScheme {
+		--drawer-width-multiplier: 1.618;
+	}
+	&#editTariffEditScheme {
+		--drawer-width-multiplier: 1.618;
+	}
+	&#addTariffEditScheme {
+		--drawer-width-multiplier: 1.618;
+	}
+	&#addTariffAddScheme {
+		--drawer-width-multiplier: 1.618;
+	}
+	&#gallery {
+		--drawer-width-multiplier: 1.618;
+	}
+	// &#amenities {
+	// 	--drawer-width-multiplier: 1.618;
+	// }
+	&#basicInfo {
+		--drawer-width-multiplier: 1.618;
+	}
+	// &#openHours {
+	// 	--drawer-width-multiplier: 1.618;
+	// }
+	// &#tariff {
+	// 	--drawer-width-multiplier: 1.618;
+	// }
+	// &#create {
+	// 	--drawer-width-multiplier: 2;
+	// }
+}
+
+@mixin hook-drawer-opening() {
+	animation-timing-function: cubic-bezier(0.34, 1.2, 0.1, 1);
+}
+
+@mixin hook-drawer-closing() {
+	animation-timing-function: cubic-bezier(0.34, 1.2, 0.1, 1);
+}
+
+// 8. Import Components
+@import '@/components/layout/ResponsiveLayout.scss';
+@import '@/scss/uikit-theme.scss';

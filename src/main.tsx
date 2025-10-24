@@ -1,0 +1,19 @@
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux';
+import App from './App.tsx';
+import { store } from './store/store.ts';
+
+// Import the UIkit JavaScript and icon library
+import 'uikit/dist/js/uikit.min.js';
+
+// Import the Sass
+import './App.scss';
+
+createRoot(document.getElementById('root')!).render(
+	<StrictMode>
+		<Provider store={store}>
+			<App />
+		</Provider>
+	</StrictMode>
+);

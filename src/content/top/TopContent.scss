@@ -1,0 +1,14 @@
+.top-content {
+	// Enable container queries on parent
+	container-type: size;
+	container-name: top-content;
+
+	> * {
+		pointer-events: auto; // Only actual content receives events
+	}
+
+	.center {
+		align-content: center;
+		margin-top: 20cqh; // 20% of container HEIGHT
+	}
+}

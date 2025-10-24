@@ -1,0 +1,112 @@
+// ===== IMPORT SASS MODULES =====
+@use 'sass:meta';
+
+/* SCSS Configuration Variables */
+$responsive-layout-min-viewport-width: 1024px !default;
+$responsive-layout-min-viewport-height: 768px !default;
+$responsive-layout-top-section-ratio: 0.05 !default;
+$responsive-layout-bottom-section-ratio: 0.05 !default;
+$responsive-layout-side-section-ratio: 0.05 !default;
+$responsive-layout-main-padding-ratio: 0.02 !default;
+
+// Helper functions for calculations
+@function viewport-width() {
+	@return max(100vw, #{$responsive-layout-min-viewport-width});
+}
+
+@function viewport-height() {
+	@return max(100vh, #{$responsive-layout-min-viewport-height});
+}
+
+@function middle-section-ratio() {
+	@return calc(1 - #{$responsive-layout-top-section-ratio} - #{$responsive-layout-bottom-section-ratio});
+}
+
+@function side-width() {
+	@return calc(#{viewport-height()} * #{$responsive-layout-side-section-ratio});
+}
+
+@function available-height() {
+	@return calc(#{viewport-height()} * #{middle-section-ratio()} - 2 * #{viewport-height()} * #{$responsive-layout-main-padding-ratio});
+}
+
+@function available-width() {
+	@return calc(#{viewport-width()} - #{side-width()} - 2 * #{viewport-height()} * #{$responsive-layout-main-padding-ratio});
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.responsive-layout {
+	display: flex;
+	flex-direction: column;
+	width: viewport-width();
+	height: viewport-height();
+	overflow: hidden;
+	position: relative;
+
+	.background {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		z-index: 0;
+
+		@if meta.mixin-exists(hook-responsive-layout-background) {
+			@include hook-responsive-layout-background();
+		}
+	}
+
+	.top {
+		height: calc(#{viewport-height()} * #{$responsive-layout-top-section-ratio});
+		z-index: 10;
+		position: relative;
+
+		@if meta.mixin-exists(hook-responsive-layout-top) {
+			@include hook-responsive-layout-top();
+		}
+	}
+
+	.middle {
+		display: grid;
+		grid-template-columns: 1fr #{side-width()};
+		height: calc(#{viewport-height()} * #{middle-section-ratio()});
+		position: relative;
+		z-index: 1;
+
+		@if meta.mixin-exists(hook-responsive-layout-middle) {
+			@include hook-responsive-layout-middle();
+		}
+	}
+
+	.main {
+		overflow: hidden;
+		padding: calc(#{viewport-height()} * #{$responsive-layout-main-padding-ratio});
+
+		@if meta.mixin-exists(hook-responsive-layout-main) {
+			@include hook-responsive-layout-main();
+		}
+	}
+
+	.side {
+		width: side-width();
+
+		@if meta.mixin-exists(hook-responsive-layout-side) {
+			@include hook-responsive-layout-side();
+		}
+	}
+
+	.bottom {
+		height: calc(#{viewport-height()} * #{$responsive-layout-bottom-section-ratio});
+		position: relative;
+		z-index: 10;
+
+		@if meta.mixin-exists(hook-responsive-layout-bottom) {
+			@include hook-responsive-layout-bottom();
+		}
+	}
+}
