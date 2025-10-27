@@ -44,9 +44,8 @@ const ResponsiveLayout: React.FC<ResponsiveLayoutProps> & {
 			<div className="top">{topContent}</div>
 
 			<div className="middle">
-				<div className="main">{mainContent}</div>
-
 				<div className="side">{sideContent}</div>
+				<div className="main">{mainContent}</div>
 			</div>
 
 			<div className="bottom">{bottomContent}</div>

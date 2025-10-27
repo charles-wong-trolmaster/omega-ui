@@ -73,7 +73,7 @@ $responsive-layout-main-padding-ratio: 0.02 !default;
 
 	.middle {
 		display: grid;
-		grid-template-columns: 1fr #{side-width()};
+		grid-template-columns: #{side-width()} 1fr;
 		height: calc(#{viewport-height()} * #{middle-section-ratio()});
 		position: relative;
 		z-index: 1;
